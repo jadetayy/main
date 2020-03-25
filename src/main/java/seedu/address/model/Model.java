@@ -86,9 +86,6 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered profile list */
     ObservableList<Profile> getFilteredPersonList();
 
-    ObservableList<Deadline> getFilteredDeadlineList();
-
-
     /**
      * Updates the filter of the filtered profile list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -101,9 +98,6 @@ public interface Model {
 
     Profile getFirstProfile();
 
-    void addDeadline(Deadline deadline);
+    ObservableList<Deadline> getFilteredDeadlineList();
 
-    void deleteDeadline(Deadline deadline);
-
-    void initDeadlineList();
 }

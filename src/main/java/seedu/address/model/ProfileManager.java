@@ -22,7 +22,7 @@ public class ProfileManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ProfileManager.class);
 
     private final ProfileList profileList;
-    private DeadlineList deadlineList;
+//    private DeadlineList deadlineList;
     private final UserPrefs userPrefs;
     private final FilteredList<Profile> filteredProfiles;
     private FilteredList<Deadline> filteredDeadlines;
@@ -36,17 +36,19 @@ public class ProfileManager implements Model {
         this.profileList = profileList;
         this.userPrefs = new UserPrefs(userPrefs);
         filteredProfiles = new FilteredList<>(profileList.getProfileList());
+//        if (this.profileList.getDeadlineList() != null) {
+//            filteredDeadlines = new FilteredList<>(this.profileList.getDeadlineList());
+//        }
     }
 
     public ProfileManager() {
         this(new ProfileList(), new UserPrefs());
     }
 
-    @Override
-    public void initDeadlineList() {
-        this.deadlineList = profileList.getDeadlineList();
-        filteredDeadlines = new FilteredList<>(deadlineList.getDeadlineList());
+    public void createDeadlineList() {
+        filteredDeadlines = new FilteredList<>(this.profileList.getDeadlineList());
     }
+
 
     @Override
     public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
@@ -84,7 +86,7 @@ public class ProfileManager implements Model {
     @Override
     public void setProfileList(ProfileList profileList) {
         this.profileList.resetData(profileList);
-        setDeadlineList(this.deadlineList);
+//        setDeadlineList(this.deadlineList);
     }
 
     @Override
@@ -144,6 +146,7 @@ public class ProfileManager implements Model {
     }
 
     public ObservableList<Deadline> getFilteredDeadlineList() {
+        filteredDeadlines = new FilteredList<>(this.profileList.getDeadlineList());
         return filteredDeadlines;
     }
 

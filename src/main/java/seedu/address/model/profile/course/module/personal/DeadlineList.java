@@ -1,23 +1,26 @@
 package seedu.address.model.profile.course.module.personal;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.profile.Profile;
+
 import java.util.ArrayList;
 
 /**
  * DeadlineList contains the list of deadlines and methods for the list.
  */
 public class DeadlineList {
-    private ArrayList<Deadline> list;
+    private final ObservableList<Deadline> deadlineList = FXCollections.observableArrayList();
 
     public DeadlineList() {
-        this.list = new ArrayList<Deadline>();
     }
 
-    public DeadlineList(ArrayList<Deadline> list) {
-        this.list = list;
-    }
+//    public DeadlineList(ArrayList<Deadline> list) {
+//        this.list = list;
+//    }
 
-    public ArrayList<Deadline> getList() {
-        return list;
+    public ObservableList<Deadline> getDeadlineList() {
+        return deadlineList;
     }
 
     /**
@@ -27,7 +30,7 @@ public class DeadlineList {
      * @return Required task.
      */
     public Deadline getDeadline(int index) {
-        return list.get(index);
+        return deadlineList.get(index);
     }
 
     /**
@@ -36,14 +39,14 @@ public class DeadlineList {
      * @return size of list.
      */
     public int getListSize() {
-        return list.size();
+        return deadlineList.size();
     }
 
     public void addDeadline(Deadline deadline) {
-        list.add(deadline);
+        deadlineList.add(deadline);
     }
 
     public void deleteDeadline(Deadline deadline) {
-        list.removeIf(dl->dl.getDescription().equals(deadline.getDescription()));
+        deadlineList.removeIf(dl->dl.getDescription().equals(deadline.getDescription()));
     }
 }

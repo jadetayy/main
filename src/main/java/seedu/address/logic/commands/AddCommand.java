@@ -104,6 +104,7 @@ public class AddCommand extends Command {
         } else { // Module does not exist
             // Create Personal object
             personal = new Personal();
+//            model.initDeadlineList();
         }
 
         if (addGrade != null) {
@@ -124,12 +125,12 @@ public class AddCommand extends Command {
                 deadline = new Deadline(moduleCode, addTask);
             }
 
-            if (model.getFilteredDeadlineList() == null) { //if no deadlines added before
-                model.initDeadlineList();
-            }
+//            if (model.getFilteredDeadlineList() == null) { //if no deadlines added before
+//                model.initDeadlineList();
+//            }
 
             personal.addDeadline(deadline);
-            model.addDeadline(deadline);
+            model.add;
 
         }
 

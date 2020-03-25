@@ -11,10 +11,14 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.model.profile.course.CourseName;
 import seedu.address.model.profile.course.module.Module;
 import seedu.address.model.profile.course.module.ModuleCode;
 import seedu.address.model.profile.course.module.personal.Deadline;
+import seedu.address.model.profile.course.module.personal.DeadlineList;
 
 /**
  * Represents a Profile in the address book.
@@ -28,6 +32,8 @@ public class Profile {
     private static String specialisation;
     private static Name name;
     private static CourseName courseName;
+    private final DeadlineList deadlines;
+    private FilteredList<Deadline> filteredDeadlines;
 
 
     /**
@@ -42,6 +48,8 @@ public class Profile {
         Profile.currentSemester = currentSemester;
         Profile.specialisation = specialisation;
         Profile.moduleHash = new HashMap<Integer, ArrayList<Module>>();
+        deadlines = new DeadlineList();
+//        filteredDeadlines = new FilteredList<>(deadlines.getDeadlineList());
     }
 
     /**
@@ -109,13 +117,36 @@ public class Profile {
         return moduleHash;
     }
 
-    public List<Deadline> getDeadlines() {
+    public ObservableList<Deadline> getDeadlines() {
         List<Module> modules = moduleHash.get(currentSemester); // Deadlines should only be from the current semester
-        List<Deadline> deadlineList = new ArrayList<>();
+//        List<Deadline> deadlineList = new ArrayList<>();
+        ObservableList<Deadline> temp = FXCollections.observableArrayList();
+            System.out.println(modules.get(0).getPersonal().getObservableDeadlines());
         for (Module module: modules) {
-            deadlineList.addAll(module.getDeadlines());
+            module.getPersonal().getDeadlines();
+            temp.addAll(module.getPersonal().getObservableDeadlines());
         }
-        return deadlineList;
+        filteredDeadlines = new FilteredList<>(temp);
+        System.out.println("---->" + deadlines);
+        return filteredDeadlines;
+    }
+
+    public ObservableList<Deadline> getFilteredDeadlines() {
+        return filteredDeadlines;
+    }
+
+//    public ObservableList<Deadline> getAllDeadlines() {
+//        List<Module> modules = moduleHash.get(currentSemester); // Deadlines should only be from the current semester
+//        for (Module module: modules) {
+//            deadlines.addAll(module.getPersonal().getObservableDeadlines());
+//        }
+//
+//        System.out.println("---->" + deadlines);
+//        return deadlines;
+//    }
+
+    public List<Module> getModulesInSem(int sem) {
+        return moduleHash.get(sem);
     }
 
     public int getModuleSemester(ModuleCode moduleCode) {

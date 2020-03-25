@@ -1,5 +1,9 @@
 package seedu.address.model.profile.course.module.personal;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+
 import java.util.List;
 
 /**
@@ -10,11 +14,13 @@ public class Personal {
     private Status status;
     private Grade grade;
     private DeadlineList deadlineList;
+    private final ObservableList<Deadline> observableDeadlines;
 
     public Personal() {
         status = new Status();
         grade = new Grade();
         deadlineList = new DeadlineList();
+        observableDeadlines = FXCollections.observableArrayList(deadlineList.getDeadlineList());
     }
 
     // Currently unusable because all the fields are private.
@@ -36,6 +42,7 @@ public class Personal {
 
     public void addDeadline(Deadline deadline) {
         this.deadlineList.addDeadline(deadline);
+        this.observableDeadlines.add(deadline);
     }
 
     public String getStatus() {
@@ -51,10 +58,15 @@ public class Personal {
     }
 
     public List<Deadline> getDeadlines() {
-        return this.deadlineList.getList();
+        return this.deadlineList.getDeadlineList();
+    }
+
+    public ObservableList getObservableDeadlines() {
+        return this.observableDeadlines;
     }
 
     public void deleteDeadline(Deadline deadline) {
         this.deadlineList.deleteDeadline(deadline);
+        this.observableDeadlines.remove(deadline);
     }
 }
